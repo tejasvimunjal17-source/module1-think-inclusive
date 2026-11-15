@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Module 1 Activity Lab · Think Inclusive</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fredoka:wght@500;600;700&family=IBM+Plex+Mono:wght@500&family=Lexend:wght@400;600&display=swap">
+<style>
+/* Layout: playful activity hub. Eight numbered "stations", each a colour-coded panel; progress bar tracks completion; works in a downloaded file (no Claude runtime needed). */
+:root{
+  --bg:#FBF7F2; --surface:#FFFFFF; --ink:#1B1F3B; --muted:#4F5672; --line:#E3E0EA; --tint:#F1EEF8;
+  --violet:#6C3BF5; --coral:#D1364C; --teal:#00796B; --amber:#B86E00; --sky:#1971C2; --slate:#58688A;
+  --violets:#EFE9FF; --corals:#FDE7EA; --teals:#DCF3EF; --ambers:#FFF0D4; --skys:#E2EFFC; --slates:#ECEEF4;
+  --good:#1C8A4E; --goods:#E2F4EA; --bad:#C2384F; --bads:#FCE6EA; --sun:#FFD27A;
+  --f-display:"Fredoka","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",Verdana,"Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --spec:linear-gradient(90deg,#6C3BF5,#D1364C 35%,#F5A623 65%,#00897B);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12162B; --surface:#1B2140; --ink:#F1F2FA; --muted:#B4BAD3; --line:#2E3660; --tint:#232A4D;
+  --violet:#A58CFF; --coral:#FF7D93; --teal:#3CC9B6; --amber:#FFB547; --sky:#6DB3FF; --slate:#A9B5D3;
+  --violets:#2A2152; --corals:#3D1D2A; --teals:#123A36; --ambers:#3D2C10; --skys:#152E4D; --slates:#262D4A;
+  --good:#4FD08A; --goods:#143326; --bad:#FF8BA0; --bads:#3A1C26; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12162B; --surface:#1B2140; --ink:#F1F2FA; --muted:#B4BAD3; --line:#2E3660; --tint:#232A4D;
+  --violet:#A58CFF; --coral:#FF7D93; --teal:#3CC9B6; --amber:#FFB547; --sky:#6DB3FF; --slate:#A9B5D3;
+  --violets:#2A2152; --corals:#3D1D2A; --teals:#123A36; --ambers:#3D2C10; --skys:#152E4D; --slates:#262D4A;
+  --good:#4FD08A; --goods:#143326; --bad:#FF8BA0; --bads:#3A1C26; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:19px;line-height:1.68;margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.13}
+h1{font-size:clamp(38px,6.6vw,70px);font-weight:700}
+h2{font-size:clamp(30px,4.6vw,48px);font-weight:700}
+h3{font-size:clamp(24px,3.1vw,32px);font-weight:600}
+h4{font-size:22px;font-weight:600}
+p{margin:0}
+a{color:var(--violet);text-underline-offset:3px;font-weight:700}
+a:focus-visible,button:focus-visible{outline:3px solid var(--violet);outline-offset:2px;border-radius:8px}
+.eyebrow{font-family:var(--f-mono);font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);font-weight:500}
+.muted{color:var(--muted)} .small{font-size:16.5px}
+.stack{display:flex;flex-direction:column;gap:16px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:24px;min-width:0}
+.prose{max-width:740px}
+.prose p+p{margin-top:12px}
+.tbl{overflow-x:auto;border-radius:18px;background:var(--surface);border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:17px}
+th,td{text-align:left;vertical-align:top;padding:13px 15px;border-bottom:1px solid var(--line)}
+th{font-family:var(--f-mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--tint)}
+tr:last-child td{border-bottom:0}
+.btn{font:700 16.5px var(--f-body);border:0;border-radius:14px;padding:11px 18px;cursor:pointer;background:var(--ink);color:var(--bg);display:inline-flex;gap:8px;align-items:center}
+.btn.alt{background:var(--surface);color:var(--ink);border:2px solid var(--line)}
+.btn[hidden]{display:none}
+
+.hero{background:linear-gradient(130deg,#6B3F00 0%,#B86E00 45%,#D1364C 100%);color:#FFF8F0;padding-block:56px 40px;position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:center;position:relative;z-index:1}
+@media (max-width:820px){.hero .wrap{grid-template-columns:1fr}}
+.hero .eyebrow{color:var(--sun)}
+.hero .lede{font-size:clamp(19px,2.4vw,23px);color:#FFEBD6;max-width:46ch}
+.hero .bq{font-family:var(--f-display);font-weight:500;font-size:clamp(21px,2.6vw,27px);color:#FFF8F0;border-left:6px solid var(--sun);padding-left:14px}
+.hero svg{width:100%;height:auto;display:block}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--f-mono);font-size:13px;padding:6px 12px;border-radius:999px;background:rgba(255,248,240,.16);border:1px solid rgba(255,248,240,.35)}
+
+.nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px;margin-top:30px}
+.nav a{text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-top:7px solid var(--c);border-radius:18px;padding:14px 16px;font-weight:400}
+.nav a b{display:block;font-family:var(--f-display);font-size:19px}
+
+.band{padding-block:52px}
+.band.alt{background:var(--surface)}
+.bandhead{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.theory{border-radius:24px;padding:24px 26px;background:var(--cs);border-left:10px solid var(--c);margin:18px 0}
+.theory .tag{font-family:var(--f-mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.theory h4{font-size:24px;margin:4px 0 8px}
+.def{border-radius:20px;padding:20px;background:var(--surface);border:2px solid var(--c);min-width:0}
+.def h4{color:var(--c)}
+.tl{position:relative;padding-left:34px;display:flex;flex-direction:column;gap:12px}
+.tl::before{content:"";position:absolute;left:12px;top:8px;bottom:8px;width:6px;border-radius:3px;background:var(--spec)}
+.tl .ev{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:12px 16px}
+.tl .ev::before{content:"";position:absolute;left:-30px;top:16px;width:18px;height:18px;border-radius:50%;background:var(--c);border:3px solid var(--bg)}
+.tl .yr{font-family:var(--f-display);font-weight:700;font-size:21px;color:var(--c)}
+
+/* cartoon player */
+.toon{border-radius:26px;overflow:hidden;border:2px solid var(--c);background:var(--surface)}
+.toon .stage{background:linear-gradient(180deg,var(--cs),var(--surface));padding:22px;display:flex;flex-direction:column;gap:14px}
+.toon .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:14px 18px;border-top:1px solid var(--line);background:var(--surface)}
+.toon .bar .lbl{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.line{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:end;transition:opacity .3s}
+.line.r{grid-template-columns:1fr 76px}
+.line.r .ch{order:2}
+.ch svg{width:76px;height:76px;display:block}
+.ch .nm{font-family:var(--f-mono);font-size:11.5px;text-align:center;color:var(--muted);margin-top:2px}
+.bub{position:relative;background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:12px 16px;font-size:18px;min-width:0}
+.line.r .bub{background:var(--cs);border-color:transparent}
+.toon.playing .line{opacity:.35}
+.toon.playing .line.now{opacity:1}
+.line.now .bub{border-color:var(--c);box-shadow:0 6px 20px rgba(0,0,0,.08)}
+@media (prefers-reduced-motion:no-preference){
+  .line.now .ch svg{animation:bob .6s ease-in-out infinite alternate}
+  @keyframes bob{from{transform:translateY(0)}to{transform:translateY(-6px)}}
+  .line.now .bub{animation:pop .35s ease}
+  @keyframes pop{from{transform:scale(.96)}to{transform:scale(1)}}
+}
+
+/* case */
+.case{margin-top:40px;border-radius:28px;background:var(--surface);border:1px solid var(--line);overflow:hidden}
+.case .ch2{background:var(--c);color:#fff;padding:22px 26px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.case .ch2 .no{font-family:var(--f-display);font-weight:700;font-size:54px;line-height:1;color:var(--sun)}
+.case .ch2 h3{color:#fff}
+.case .ch2 .sub{font-family:var(--f-mono);font-size:13px;letter-spacing:.08em;opacity:.92}
+.case .cb{padding:24px 26px;display:flex;flex-direction:column;gap:20px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:12px}
+.facts div{border-radius:18px;padding:16px;background:var(--cs);text-align:center}
+.facts b{display:block;font-family:var(--f-display);font-size:40px;line-height:1;color:var(--c)}
+.facts span{font-size:15.5px}
+.lesson{border-radius:20px;padding:18px 20px;background:#1B1F3B;color:#FFF8F0}
+.lesson .tag{font-family:var(--f-mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--sun)}
+.qs{padding-left:24px;display:flex;flex-direction:column;gap:6px;margin:0}
+.src{font-size:14.5px;color:var(--muted)}
+
+/* sims */
+.sim{border-radius:26px;padding:24px;background:var(--surface);border:2px solid var(--c)}
+.hbars{display:flex;flex-direction:column;gap:6px;margin-top:14px}
+.hb{display:grid;grid-template-columns:120px 1fr 64px;gap:10px;align-items:center;font-size:15.5px}
+.hb .tr{height:24px;background:var(--tint);border-radius:7px;overflow:hidden}
+.hb .fl{height:100%;border-radius:7px;background:var(--amber);transition:width .5s}
+.hb .v{font-family:var(--f-mono);font-size:14px;text-align:right}
+@media (max-width:520px){.hb{grid-template-columns:86px 1fr 52px}}
+.big{font-family:var(--f-display);font-weight:700;font-size:clamp(46px,8vw,72px);line-height:1}
+.toggles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:10px}
+.tg{display:flex;justify-content:space-between;align-items:center;gap:10px;border-radius:16px;padding:12px 14px;background:var(--tint);font-size:16.5px}
+.tg button{font:700 14.5px var(--f-body);border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer;white-space:nowrap}
+.tg button.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.tg button.off{background:var(--coral);border-color:var(--coral);color:#fff}
+.class{display:grid;grid-template-columns:repeat(10,1fr);gap:8px;margin-top:12px}
+.class span{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;color:#fff;transition:background .3s}
+@media (max-width:520px){.class{grid-template-columns:repeat(8,1fr)}}
+
+.vids{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:14px}
+.vid{display:flex;flex-direction:column;text-decoration:none;color:var(--ink);border-radius:20px;overflow:hidden;border:2px solid var(--line);background:var(--surface);font-weight:400}
+.vid:hover{border-color:var(--amber)}
+.vid .th{aspect-ratio:16/9;max-width:100%;display:grid;place-items:center;background:var(--g)}
+.vid .th i{width:66px;height:46px;border-radius:14px;background:#E62117;display:grid;place-items:center}
+.vid .th i.w{background:#1B1F3B}
+.vid .tx{padding:12px 16px 16px}
+.vid .tx b{display:block;font-family:var(--f-display);font-size:19px;font-weight:600}
+.vid .tx small{color:var(--muted);font-size:14.5px}
+
+.qz{display:flex;flex-direction:column;gap:16px}
+.qq p.qt{font-weight:700;margin-bottom:10px}
+.qo{display:flex;flex-direction:column;gap:8px}
+.qo button{all:unset;box-sizing:border-box;cursor:pointer;border:2px solid var(--line);border-radius:14px;padding:11px 15px;font-size:17px;background:var(--surface)}
+.qo button:hover{border-color:var(--amber)}
+.qo button:focus-visible{outline:3px solid var(--violet);outline-offset:2px}
+.qo button.right{border-color:var(--good);background:var(--goods)}
+.qo button.wrong{border-color:var(--bad);background:var(--bads)}
+.qf{margin-top:10px;font-size:16.5px;padding:11px 13px;border-radius:12px;background:var(--tint)}
+footer{padding-block:44px;border-top:1px solid var(--line)}
+.refs{font-size:15.5px;color:var(--muted);padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.specbar{height:8px;width:200px;border-radius:8px;background:var(--spec)}
+.ttsnote{font-size:15.5px;color:var(--muted)}
+
+.hero{background:linear-gradient(130deg,#0B6E63 0%,#6C3BF5 40%,#D1364C 75%,#F5A623 100%)}
+.hero .lede{color:#F1FFFB}
+.prog{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line);padding:10px 0}
+.prog .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.prog .tr{flex:1;min-width:160px;height:14px;background:var(--tint);border-radius:9px;overflow:hidden}
+.prog .fl{height:100%;width:0;background:var(--spec);transition:width .6s}
+.prog b{font-family:var(--f-display);font-size:18px}
+.st{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;margin-bottom:18px}
+.st .n{width:62px;height:62px;border-radius:20px;display:grid;place-items:center;font:700 30px var(--f-display);color:#fff;background:var(--c)}
+.st h2{font-size:clamp(28px,4vw,40px)}
+.st p{color:var(--muted);font-size:17px}
+.done-tag{display:none;font:600 13px var(--f-mono);color:#fff;background:var(--good);border-radius:999px;padding:4px 10px;margin-left:8px;vertical-align:middle}
+.station.done .done-tag{display:inline-block}
+.panel{border-radius:26px;padding:clamp(18px,3vw,28px);background:var(--surface);border:2px solid var(--c)}
+.simbox{border-radius:20px;padding:22px;background:var(--tint);min-height:150px;position:relative;overflow:hidden;font-size:21px;line-height:1.7}
+.simbox.calm{background:#F4F1EA;color:#1B1F3B}
+.simbox.dys.calm{font-family:"Lexend",var(--f-body);letter-spacing:.04em;word-spacing:.18em;line-height:2}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button{font:700 16px var(--f-body);border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:14px;padding:10px 16px;cursor:pointer}
+.tabs button.on{background:var(--c);border-color:var(--c);color:#fff}
+.toast{position:absolute;right:14px;background:#1B1F3B;color:#fff;font-size:15px;border-radius:12px;padding:10px 14px;box-shadow:0 8px 20px rgba(0,0,0,.25);animation:pop .3s ease;max-width:260px}
+@keyframes pop{from{transform:translateY(-10px);opacity:0}}
+.marq{position:absolute;left:0;bottom:8px;white-space:nowrap;font:700 16px var(--f-mono);color:#D1364C;animation:mq 7s linear infinite}
+@keyframes mq{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
+.sens{animation:hue 2.4s ease-in-out infinite alternate}
+@keyframes hue{from{background:#FFE8F0}to{background:#E6F4FF}}
+.wob{display:inline-block;animation:wob 1.6s ease-in-out infinite}
+@keyframes wob{50%{transform:translateY(-3px) rotate(-1.5deg)}}
+@media (prefers-reduced-motion:reduce){.sens,.wob,.marq,.toast{animation:none}}
+.ask{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button{font:700 16px var(--f-body);border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:14px;padding:10px 14px;cursor:pointer;text-align:left}
+.opts button.right{background:var(--good);border-color:var(--good);color:#fff}
+.opts button.wrong{background:var(--bad);border-color:var(--bad);color:#fff}
+.fb{border-radius:14px;padding:12px 16px;background:var(--tint);font-size:17px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:14px}
+.pcard{border-radius:20px;padding:18px;background:var(--tint);border:2px solid transparent;display:flex;flex-direction:column;gap:10px}
+.pcard.ok{border-color:var(--good)}
+.pcard .who{display:flex;gap:10px;align-items:center}
+.pcard .who svg{width:58px;height:58px;flex:none}
+.pcard select{font:16px var(--f-body);padding:9px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--ink)}
+.pcard .rev{display:none;font-size:15.5px;border-top:1px dashed var(--line);padding-top:8px}
+.pcard.ok .rev{display:block}
+.mf{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;border-radius:16px;padding:14px 16px;background:var(--tint)}
+.mf .yn{display:flex;gap:8px}
+.mf .yn button{font:700 15px var(--f-body);border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 16px;cursor:pointer}
+.mf .exp{grid-column:1/-1;display:none;font-size:15.5px}
+.mf.ans .exp{display:block}
+@media (max-width:560px){.mf{grid-template-columns:1fr}}
+.story{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start}
+.story .pic svg{width:120px;height:120px}
+.story .txt{font-size:20px;line-height:1.55}
+@media (max-width:560px){.story{grid-template-columns:1fr}}
+.rid{border-radius:18px;padding:18px;background:var(--tint);display:flex;flex-direction:column;gap:10px}
+.rid .q{font-size:18px}
+.rid .a{display:none;font:700 20px var(--f-display);color:var(--c)}
+.rid.open .a{display:block}
+.sl{display:grid;grid-template-columns:170px 1fr 34px;gap:10px;align-items:center;font-size:16px}
+.sl input{width:100%;accent-color:var(--violet)}
+@media (max-width:520px){.sl{grid-template-columns:1fr 34px}.sl span:first-child{grid-column:1/-1}}
+.rub{width:100%;border-collapse:separate;border-spacing:6px}
+.rub td,.rub th{padding:10px;border-radius:12px;font-size:15px;vertical-align:top}
+.rub th{background:var(--ink);color:var(--bg);text-align:left;font:700 15px var(--f-body);text-transform:none;letter-spacing:0}
+.rub td.lv{background:var(--tint);cursor:pointer}
+.rub td.lv.on{background:var(--c);color:#fff}
+.rub td.lv:focus-visible{outline:3px solid var(--ink)}
+.badge{border-radius:26px;padding:28px;color:#fff;background:linear-gradient(130deg,#3B1E9E,#6C3BF5 40%,#D1364C 80%,#F5A623);text-align:center}
+.badge h3{font-size:clamp(26px,4vw,38px)}
+.badge input{font:700 20px var(--f-body);padding:10px 14px;border-radius:12px;border:0;text-align:center;max-width:100%}
+.warn{font-size:15px;border-left:5px solid var(--amber);background:var(--ambers);padding:10px 14px;border-radius:10px}
+@media print{.prog,.hero svg,.nav{display:none}}
+
+/* Mobile usability: prevent sideways page scrolling and make controls easier to tap. */
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { min-width: 320px; overflow-x: hidden; }
+button, select, input { max-width: 100%; touch-action: manipulation; }
+button { min-height: 44px; }
+svg { max-width: 100%; }
+@media (max-width: 600px) {
+  .hero { padding-block: 32px 28px; }
+  .band { padding-block: 32px; }
+  .card, .panel, .sim { padding: 18px; }
+  .case .cb { padding: 18px; }
+  .case .ch2 { padding: 18px; }
+}
+
+</style>
+</head>
+<body>
+
+
+<header class="hero">
+  <div class="wrap">
+    <div class="stack" style="gap:18px">
+      <div class="eyebrow">Module 1 · Activity Lab · Think Inclusive!</div>
+      <h1>Walk in Their Shoes</h1>
+      <p class="bq">Eight hands-on stations to feel, spot and fix learning barriers, and to see the strengths of different minds.</p>
+      <p class="lede">Simulations, a matching game, myth-busting, an interactive story with voices, a barrier-fixing puzzle, riddles, a personal strengths map and a self-check rubric that ends in a badge.</p>
+      <div class="chips"><span>8 stations · 60–75 min</span><span>Works offline in Chrome</span><span>Self-check rubric + badge</span><span>CC BY-SA 4.0</span></div>
+    </div>
+    <svg viewBox="0 0 460 400" role="img" aria-label="Four cartoon characters waving around a large magnifying glass"><g id="heroArt"></g></svg>
+  </div>
+</header>
+
+<div class="prog" aria-label="Progress"><div class="wrap"><b>Your journey</b><div class="tr"><div class="fl" id="pfill"></div></div><span id="ptxt" class="small">0 of 8 stations</span></div></div>
+
+<div class="wrap" style="padding-block:28px 6px">
+  <div class="nav" id="nav"></div>
+  <div class="warn" style="margin-top:18px"><b>An important note.</b> These activities build <b>understanding and empathy</b>. They are <b>not diagnostic tests</b>. Only qualified professionals can identify autism, ADHD, dyslexia or other conditions, and teachers should never label a student. Our job is to remove barriers so every learner can succeed, with or without a diagnosis.</div>
+</div>
+
+<!-- 1 SIMULATIONS -->
+<section class="band station" id="s1" style="--c:var(--violet);--cs:var(--violets)"><div class="wrap">
+  <div class="st"><span class="n">1</span><div><h2>Feel the Barrier <span class="done-tag">✓ done</span></h2><p>Three short simulations. Try each in “Barrier mode”, answer the question, then switch on “Support mode” and feel the difference.</p></div></div>
+  <div class="panel">
+    <div class="tabs" id="simTabs" role="tablist"></div>
+    <p id="simIntro" style="font-size:17px;margin-bottom:12px"></p>
+    <div class="opts" style="margin-bottom:12px"><button type="button" class="btn" id="simStart">▶ Start in Barrier mode</button><button type="button" class="btn alt" id="simCalm">🌿 Switch to Support mode</button></div>
+    <div class="simbox" id="simBox" aria-live="off"></div>
+    <div class="ask" id="simAsk"></div>
+    <p class="small muted" style="margin-top:10px">These simulations give a small taste of some experiences. They are approximations: every person’s experience is different, and many neurodivergent people also have real strengths in these areas.</p>
+  </div>
+</div></section>
+
+<!-- 2 MATCH -->
+<section class="band alt station" id="s2" style="--c:var(--coral);--cs:var(--corals)"><div class="wrap">
+  <div class="st"><span class="n">2</span><div><h2>Who’s in My Class? <span class="done-tag">✓ done</span></h2><p>Read each learner’s story and match it to the profile it describes best. Each correct match reveals strengths and one simple support.</p></div></div>
+  <div class="cards" id="matchCards"></div>
+  <p class="fb" id="matchFb" style="margin-top:14px">Matched: 0 of 6</p>
+  <p class="small muted" style="margin-top:8px">Remember: a profile is not a box. Two autistic learners, or two learners with ADHD, can be very different. Many people have more than one profile.</p>
+</div></section>
+
+<!-- 3 MYTH OR FACT -->
+<section class="band station" id="s3" style="--c:var(--amber);--cs:var(--ambers)"><div class="wrap">
+  <div class="st"><span class="n">3</span><div><h2>Myth or Fact? <span class="done-tag">✓ done</span></h2><p>Ten statements you may have heard in staff rooms. Decide, then read why.</p></div></div>
+  <div class="stack" style="gap:10px" id="mfList"></div>
+  <p class="fb" id="mfScore" style="margin-top:14px">Score: 0 / 10</p>
+</div></section>
+
+<!-- 4 STORY -->
+<section class="band alt station" id="s4" style="--c:var(--teal);--cs:var(--teals)"><div class="wrap">
+  <div class="st"><span class="n">4</span><div><h2>A Day in Zoya’s Online Class <span class="done-tag">✓ done</span></h2><p>An interactive story. You are Zoya’s teacher. Make three decisions and see how her day changes. Press 🔊 to hear each scene.</p></div></div>
+  <div class="panel">
+    <div class="story"><div class="pic" id="stPic"></div><div><p class="eyebrow" id="stStep" style="color:var(--teal)"></p><p class="txt" id="stTxt"></p></div></div>
+    <div class="opts" id="stOpts" style="margin-top:16px"></div>
+    <div class="opts" style="margin-top:12px"><button type="button" class="btn alt" id="stSay">🔊 Read aloud</button><button type="button" class="btn alt" id="stRe" hidden>↺ Play again</button></div>
+  </div>
+</div></section>
+
+<!-- 5 FIX THE BARRIER -->
+<section class="band station" id="s5" style="--c:var(--sky);--cs:var(--skys)"><div class="wrap">
+  <div class="st"><span class="n">5</span><div><h2>Fix the Barrier <span class="done-tag">✓ done</span></h2><p>Six common features of digital courses. For each one, pick the fix that helps the most learners, without needing anyone to disclose a diagnosis.</p></div></div>
+  <div class="cards" id="fixCards"></div>
+  <p class="fb" id="fixScore" style="margin-top:14px">Barriers fixed: 0 of 6</p>
+</div></section>
+
+<!-- 6 RIDDLES -->
+<section class="band alt station" id="s6" style="--c:#8E3BB0;--cs:var(--violets)"><div class="wrap">
+  <div class="st"><span class="n" style="background:#8E3BB0">6</span><div><h2>Who Am I? Concept Riddles <span class="done-tag">✓ done</span></h2><p>Each riddle describes a key idea from Module 1. Think first, then reveal.</p></div></div>
+  <div class="cards" id="ridList"></div>
+</div></section>
+
+<!-- 7 SPIKY PROFILE -->
+<section class="band station" id="s7" style="--c:var(--violet);--cs:var(--violets)"><div class="wrap">
+  <div class="st"><span class="n">7</span><div><h2>My Spiky Profile <span class="done-tag">✓ done</span></h2><p>Rate yourself from 1 to 10 on each area. This is not a test: it is a mirror. Watch your shape appear, and compare it with the “average” circle.</p></div></div>
+  <div class="grid g2 panel" style="align-items:center">
+    <div class="stack" style="gap:10px" id="sliders"></div>
+    <div class="stack" style="align-items:center"><svg id="radar" viewBox="-50 -10 500 420" style="width:100%;max-width:400px" role="img" aria-label="Radar chart of your self-rated profile compared with an even average circle"></svg><p id="spikeMsg" class="fb" style="width:100%"></p></div>
+  </div>
+</div></section>
+
+<!-- 8 RUBRIC -->
+<section class="band alt station" id="s8" style="--c:var(--amber);--cs:var(--ambers)"><div class="wrap">
+  <div class="st"><span class="n">8</span><div><h2>Self-Check Rubric and Badge <span class="done-tag">✓ done</span></h2><p>Write a short reflection (in the forum or your journal), then rate yourself honestly on each criterion. Click one box per row.</p></div></div>
+  <div class="panel">
+    <p style="font-size:18px"><b>Reflection prompt:</b> “Which station changed my thinking the most, what barrier will I remove from my own course, and how?” (150–250 words, or a 2-minute audio or video)</p>
+    <div class="tbl" style="margin-top:14px"><table class="rub" id="rub"></table></div>
+    <p class="fb" id="rubRes" style="margin-top:12px">Your score: 0 / 16</p>
+  </div>
+  <div class="badge" style="margin-top:22px" id="badge">
+    <p class="eyebrow" style="color:#FFD27A">OE4BW 2026 · Module 1</p>
+    <h3 style="margin-top:8px">Inclusive Design Explorer</h3>
+    <p style="margin:10px 0">Complete all 8 stations to unlock this badge.</p>
+    <input id="bName" placeholder="Type your name" aria-label="Your name for the badge">
+    <p id="bTxt" style="margin-top:12px;font-size:18px"></p>
+    <div class="opts" style="justify-content:center;margin-top:12px"><button type="button" class="btn" id="bPrint" style="background:#fff;color:#1B1F3B">🖨 Print or save as PDF</button></div>
+  </div>
+  <p class="small muted" style="margin-top:14px">Take a screenshot of the badge (or save as PDF) and upload it with your reflection to the activity in Google Classroom.</p>
+</div></section>
+
+<footer>
+  <div class="wrap stack">
+    <div class="specbar"></div>
+    <p class="small"><b>Module 1 Activity Lab · Think Inclusive!</b> · OE4BW 2026 · AI-Responsive Critical Digital Pedagogy for Neurodiverse Well-being · Dr. Sonam Bansal, Gurugram University · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Characters and stories are original and written for teaching. The activities are educational, not diagnostic.</p>
+    <p class="small muted">Key ideas drawn from: Milton (2012) on the double empathy problem; Rose (2016) on jagged profiles; CAST (2018) UDL Guidelines 2.2; Blackwell (2017) on the curb-cut effect.</p>
+  </div>
+</footer>
+
+<script>
+/* ---------- cartoon characters (original) ---------- */
+const PEOPLE={
+  N:{name:'Dr. Nandini',skin:'#C98B5E',hair:'#2B1B12',top:'#6C3BF5',style:'bun',voice:'airy'},
+  A:{name:'Arjun',skin:'#B07446',hair:'#1E1410',top:'#D1364C',style:'spiky',voice:'rounded'},
+  Z:{name:'Zoya',skin:'#D9A47A',hair:'#3A2416',top:'#00796B',style:'long',voice:'glassy'},
+  K:{name:'Dr. Kapoor',skin:'#C48A60',hair:'#9AA0AE',top:'#58688A',style:'bald',voice:'buttery'}
+};
+function toon(k,size){const p=PEOPLE[k];const h={
+  bun:`<circle cx="50" cy="20" r="11" fill="${p.hair}"/><path d="M24 44 C 24 22, 76 22, 76 44 L 76 36 C 70 26, 30 26, 24 36 Z" fill="${p.hair}"/>`,
+  spiky:`<path d="M24 40 L 28 22 L 36 30 L 42 16 L 50 28 L 58 15 L 64 29 L 72 21 L 76 40 Z" fill="${p.hair}"/>`,
+  long:`<path d="M22 70 C 16 30, 30 18, 50 18 C 70 18, 84 30, 78 70 L 70 70 C 74 44, 66 30, 50 30 C 34 30, 26 44, 30 70 Z" fill="${p.hair}"/>`,
+  bald:`<path d="M25 40 C 25 32, 30 30, 32 36 M75 40 C 75 32, 70 30, 68 36" stroke="${p.hair}" stroke-width="6" fill="none"/><rect x="34" y="44" width="12" height="9" rx="3" fill="none" stroke="#1B1F3B" stroke-width="2.5"/><rect x="54" y="44" width="12" height="9" rx="3" fill="none" stroke="#1B1F3B" stroke-width="2.5"/><line x1="46" y1="48" x2="54" y2="48" stroke="#1B1F3B" stroke-width="2.5"/>`}[p.style];
+  return `<svg viewBox="0 0 100 100" width="${size||76}" height="${size||76}" aria-hidden="true"><path d="M14 100 C 14 76, 30 68, 50 68 C 70 68, 86 76, 86 100 Z" fill="${p.top}"/><circle cx="50" cy="46" r="26" fill="${p.skin}"/>${h}<circle cx="41" cy="48" r="3.2" fill="#1B1F3B"/><circle cx="59" cy="48" r="3.2" fill="#1B1F3B"/><path d="M41 58 Q 50 65 59 58" stroke="#1B1F3B" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="35" cy="56" r="3.5" fill="#F28B82" opacity=".55"/><circle cx="65" cy="56" r="3.5" fill="#F28B82" opacity=".55"/></svg>`}
+
+const $=id=>document.getElementById(id);
+const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const STN=[['s1','Feel the Barrier','var(--violet)'],['s2','Who’s in My Class?','var(--coral)'],['s3','Myth or Fact?','var(--amber)'],['s4','Zoya’s Story','var(--teal)'],['s5','Fix the Barrier','var(--sky)'],['s6','Concept Riddles','#8E3BB0'],['s7','My Spiky Profile','var(--violet)'],['s8','Rubric and Badge','var(--amber)']];
+let done=store.get('lab-done')||{};
+$('nav').innerHTML=STN.map(([id,t,c],i)=>`<a href="#${id}" style="--c:${c}"><span class="eyebrow" style="color:${c}">Station ${i+1}</span><b>${t}</b></a>`).join('');
+function mark(id){done[id]=1;store.set('lab-done',done);refresh()}
+function refresh(){const n=STN.filter(s=>done[s[0]]).length;$('pfill').style.width=(n/8*100)+'%';$('ptxt').textContent=n+' of 8 stations';STN.forEach(([id])=>$(id).classList.toggle('done',!!done[id]));
+ const nm=$('bName').value.trim();$('bTxt').innerHTML=n===8?`🏅 <b>${nm?nm.replace(/</g,'&lt;'):'This participant'}</b> has completed all 8 stations of the Module 1 Activity Lab.<br>${new Date().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'})}`:`🔒 ${8-n} station${8-n===1?'':'s'} left to unlock the badge.`}
+
+/* hero */
+(()=>{let s='<circle cx="230" cy="190" r="120" fill="rgba(255,255,255,.18)" stroke="#fff" stroke-width="10"/><line x1="315" y1="275" x2="400" y2="360" stroke="#fff" stroke-width="22" stroke-linecap="round"/>';
+ [['N',110,40],['A',250,40],['Z',100,190],['K',250,190]].forEach(([k,x,y])=>s+=`<g transform="translate(${x},${y}) scale(1.05)">${toon(k).replace(/^<svg[^>]*>|<\/svg>$/g,'')}</g>`);$('heroArt').innerHTML=s})();
+
+/* ---------- speech (built-in voices, works offline) ---------- */
+const WS=('speechSynthesis' in window)?speechSynthesis:null;
+function say(text,k){if(!WS)return;WS.cancel();const u=new SpeechSynthesisUtterance(text);const vs=WS.getVoices().filter(v=>/^en/i.test(v.lang));const pref=vs.filter(v=>/IN/i.test(v.lang)).concat(vs);if(pref.length)u.voice=pref[0];u.lang=u.voice?u.voice.lang:'en-IN';u.pitch={N:1.15,Z:1.35,A:1,K:.8}[k]||1;u.rate=.95;WS.speak(u)}
+if(WS)WS.getVoices();
+
+/* ---------- 1 simulations ---------- */
+const SIMS=[
+ {k:'dys',label:'📖 Reading (dyslexia)',intro:'Read the passage and answer the question. In Barrier mode, letters shift as some dyslexic readers describe. Support mode uses a clearer font, wider spacing, stable text and read-aloud.',
+  text:'The bus to the science museum leaves at nine fifteen from the main gate. Bring a packed lunch, a water bottle and your signed permission slip. Phones must stay in your bag during the planetarium show.',
+  q:'What must stay in the bag during the show?',o:['The water bottle','The phone','The permission slip'],a:1},
+ {k:'adhd',label:'⚡ Attention (ADHD)',intro:'Read the instructions while notifications pop up and a banner scrolls past. Then answer. Support mode removes distractions and breaks the task into a short checklist.',
+  text:'For tomorrow: (1) watch the 8-minute video on Freire, (2) post one question in Forum 1, (3) reply to two classmates, and (4) upload your journal entry before 6 pm.',
+  q:'By what time must the journal be uploaded?',o:['Before 5 pm','Before 6 pm','Before 8 pm'],a:1},
+ {k:'sens',label:'🔊 Sensory overload (autism and others)',intro:'Turn your sound on (not too loud). Read the instruction with background noise and shifting colours. Support mode is quiet and calm. Skip the sound if it is uncomfortable for you.',
+  text:'Meet your group in breakout room 4 at 11:20. Bring your concept-map draft and choose one person to share the screen.',
+  q:'Which breakout room is your group in?',o:['Room 2','Room 4','Room 11'],a:1}];
+let sim=0,simTimer=null,toastTimer=null,noise=null,calm=false;
+$('simTabs').innerHTML=SIMS.map((s,i)=>`<button type="button" role="tab" data-i="${i}">${s.label}</button>`).join('');
+$('simTabs').onclick=e=>{const b=e.target.closest('button');if(b){sim=+b.dataset.i;stopSim();renderSim()}};
+function stopSim(){clearInterval(simTimer);clearInterval(toastTimer);simTimer=toastTimer=null;if(noise){try{noise.ctx.close()}catch(e){}noise=null}if(WS)WS.cancel()}
+function jumble(w){if(w.length<4)return w;const m=w.slice(1,-1).split('');for(let i=m.length-1;i>0;i--){if(Math.random()<.5){const j=Math.floor(Math.random()*(i+1));[m[i],m[j]]=[m[j],m[i]]}}return w[0]+m.join('')+w.slice(-1)}
+function renderSim(){const s=SIMS[sim];$('simTabs').querySelectorAll('button').forEach((b,i)=>{b.classList.toggle('on',i===sim);b.setAttribute('aria-selected',i===sim)});$('simIntro').textContent=s.intro;
+ const box=$('simBox');box.className='simbox '+s.k;box.innerHTML='<p class="muted">Press <b>Start in Barrier mode</b> to begin.</p>';$('simAsk').innerHTML='';calm=false}
+function ask(){const s=SIMS[sim];$('simAsk').innerHTML=`<p style="font-size:18px"><b>Question:</b> ${s.q}</p><div class="opts">${s.o.map((o,i)=>`<button type="button" data-i="${i}">${o}</button>`).join('')}</div><div class="fb" hidden id="simFb"></div>`;
+ $('simAsk').querySelectorAll('button').forEach(b=>b.onclick=()=>{const ok=+b.dataset.i===s.a;$('simAsk').querySelectorAll('button').forEach(x=>{if(+x.dataset.i===s.a)x.classList.add('right');else if(x===b)x.classList.add('wrong')});const f=$('simFb');f.hidden=false;
+  f.innerHTML=(ok?'<b style="color:var(--good)">Correct.</b> ':'<b style="color:var(--bad)">Not quite.</b> ')+(calm?'Was it easier in Support mode? Notice that <b>every</b> learner benefits from these supports: the curb-cut effect.':'Now press <b>Switch to Support mode</b> and try again. Ask yourself: how did it feel? How long could you keep this up for a whole course?');
+  const k='sim'+sim;done[k]=1;if(done.sim0&&done.sim1&&done.sim2)mark('s1');else store.set('lab-done',done)})}
+$('simStart').onclick=()=>{stopSim();calm=false;const s=SIMS[sim],box=$('simBox');box.className='simbox '+s.k;
+ if(s.k==='dys'){const ws=s.text.split(' ');box.innerHTML='<p id="dysP"></p>';const p=$('dysP');const draw=()=>p.textContent=ws.map(jumble).join(' ');draw();simTimer=setInterval(draw,450)}
+ if(s.k==='adhd'){box.innerHTML=`<p style="font-size:17px;max-width:62%">${s.text}</p><div class="marq">🔥 FLASH SALE · New message from Mum · 3 unread emails · Exam timetable changed? · Battery 9% · 🔥 FLASH SALE</div>`;
+  const T=['📱 Riya: did u see the reel??','🔔 Calendar: meeting in 5 min','📧 Fee reminder','⏰ Laundry is done','💬 Group chat (27 new)','🎮 Your friend is online','🛒 Cart: 2 items waiting'];let i=0;
+  toastTimer=setInterval(()=>{const t=document.createElement('div');t.className='toast';t.style.top=(12+(i%3)*58)+'px';t.textContent=T[i%T.length];box.appendChild(t);setTimeout(()=>t.remove(),2600);i++},1300)}
+ if(s.k==='sens'){box.className+=' sens';box.innerHTML=`<p style="font-size:15px">${s.text.split(' ').map(w=>`<span class="wob">${w}</span>`).join(' ')}</p><p class="small" style="margin-top:8px">🔊 Background noise is playing…</p>`;
+  try{const ctx=new (window.AudioContext||window.webkitAudioContext)();const buf=ctx.createBuffer(1,ctx.sampleRate*2,ctx.sampleRate),d=buf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*.35;const src=ctx.createBufferSource();src.buffer=buf;src.loop=true;const g=ctx.createGain();g.gain.value=.12;const o=ctx.createOscillator();o.frequency.value=120;const g2=ctx.createGain();g2.gain.value=.05;src.connect(g).connect(ctx.destination);o.connect(g2).connect(ctx.destination);src.start();o.start();noise={ctx}}catch(e){}}
+ ask()};
+$('simCalm').onclick=()=>{stopSim();calm=true;const s=SIMS[sim],box=$('simBox');box.className='simbox calm '+s.k;
+ if(s.k==='dys')box.innerHTML=`<p>${s.text}</p><button type="button" class="btn alt" id="rd" style="margin-top:10px">🔊 Read aloud</button>`;
+ if(s.k==='adhd')box.innerHTML=`<p><b>For tomorrow ✔</b></p><ol style="padding-left:24px;line-height:1.9"><li>☐ Watch the 8-min Freire video</li><li>☐ Post 1 question in Forum 1</li><li>☐ Reply to 2 classmates</li><li>☐ Upload journal · <b style="color:var(--bad)">before 6 pm</b></li></ol><p class="small muted">🔕 Notifications paused</p>`;
+ if(s.k==='sens')box.innerHTML=`<p style="font-size:22px">🟢 <b>Breakout room 4</b> · 11:20<br>Bring: concept-map draft<br>Choose: one screen-sharer</p><p class="small muted">🔇 Quiet · calm colours · key facts first</p>`;
+ const rd=$('rd');if(rd)rd.onclick=()=>say(s.text,'N');ask()};
+renderSim();
+
+/* ---------- 2 match ---------- */
+const PROF=['ADHD','Autism','Dyslexia','Dyspraxia (DCD)','Tourette syndrome','Dyscalculia'];
+const KIDS=[
+ {k:'A',name:'Aarav, 20',story:'Has brilliant ideas in class discussions and can work for hours on a project he loves, but often starts assignments the night before and loses track of deadlines.',p:0,str:'Energy, creativity, hyperfocus on interests',sup:'Break tasks into steps with mini-deadlines and visual timers.'},
+ {k:'Z',name:'Meera, 22',story:'Notices details others miss and knows her subject deeply. Finds noisy group work draining, and prefers clear, literal instructions to hints.',p:1,str:'Deep focus, accuracy, honesty, pattern-spotting',sup:'Give explicit instructions and a quiet or written way to participate.'},
+ {k:'A',name:'Kabir, 19',story:'Explains complex ideas brilliantly out loud and is a strong big-picture thinker, but reads slowly and his spelling does not reflect what he knows.',p:2,str:'Verbal reasoning, big-picture and creative thinking',sup:'Offer audio versions, text-to-speech and choice of output format.'},
+ {k:'Z',name:'Sana, 21',story:'Is a thoughtful planner of ideas but finds handwriting, typing fast and organising physical materials tiring. She sometimes bumps into things.',p:3,str:'Persistence, empathy, strategic thinking',sup:'Allow typing or voice input, extra time, and digital organisers.'},
+ {k:'K',name:'Rohan, 23',story:'Has involuntary sounds and movements that increase when he is stressed or holding them in. He is witty and well liked.',p:4,str:'Resilience, humour, often strong focus',sup:'Reduce pressure to suppress tics; allow breaks and cameras optional.'},
+ {k:'N',name:'Ishita, 20',story:'Writes beautifully and analyses literature well, but numbers, timetables and mental arithmetic feel slippery and stressful.',p:5,str:'Language, creativity, intuitive thinking',sup:'Provide worked examples, calculators and visual number aids.'}];
+$('matchCards').innerHTML=KIDS.map((c,i)=>`<div class="pcard" data-i="${i}"><div class="who">${toon(c.k)}<b style="font-size:19px">${c.name}</b></div><p style="font-size:16.5px">${c.story}</p><select aria-label="Match a profile for ${c.name}"><option value="">Choose a profile…</option>${PROF.map((p,j)=>`<option value="${j}">${p}</option>`).join('')}</select><div class="rev"><b style="color:var(--good)">✓ Correct.</b><br><b>Strengths:</b> ${c.str}<br><b>Simple support:</b> ${c.sup}</div><p class="small" data-msg style="color:var(--bad)"></p></div>`).join('');
+$('matchCards').querySelectorAll('.pcard').forEach(card=>card.querySelector('select').onchange=e=>{const c=KIDS[+card.dataset.i];const ok=+e.target.value===c.p&&e.target.value!=='';card.classList.toggle('ok',ok);card.querySelector('[data-msg]').textContent=ok||e.target.value===''?'':'Not quite. Read the story again: what is the main barrier?';
+ const n=$('matchCards').querySelectorAll('.pcard.ok').length;$('matchFb').innerHTML=`Matched: <b>${n}</b> of 6`+(n===6?' 🎉 All matched! Notice that every learner has strengths, and every support also helps others.':'');if(n===6)mark('s2')});
+
+/* ---------- 3 myth or fact ---------- */
+const MF=[
+ ['Dyslexia is a sign of low intelligence.',0,'Myth. Dyslexia is a specific difference in processing written language. It is unrelated to general intelligence.'],
+ ['People with ADHD cannot focus at all.',0,'Myth. Attention is regulated differently. Many people with ADHD hyperfocus intensely on tasks that interest them.'],
+ ['Autistic people lack empathy.',0,'Myth. The double empathy problem (Milton, 2012) shows that misunderstanding runs both ways between autistic and non-autistic people.'],
+ ['Neurodivergent conditions are lifelong and are not “cured”.',1,'Fact. They are lifelong neurological differences. Support and environment change outcomes, not the brain type.'],
+ ['Girls and women are often diagnosed later than boys and men.',1,'Fact. Their presentation can be less visible, and many learn to mask their differences.'],
+ ['Matching teaching to a learner’s “learning style” improves results.',0,'Myth. Research does not support it (Pashler et al., 2008). Offering multiple means of representation helps everyone.'],
+ ['Captions help many learners, not only deaf learners.',1,'Fact. Captions support learners with ADHD, dyslexia, auditory processing differences and second-language learners: the curb-cut effect.'],
+ ['Adults can be diagnosed with ADHD for the first time.',1,'Fact. Many adults are diagnosed in university or work, often after years of unexplained struggle.'],
+ ['Most people with Tourette syndrome swear involuntarily.',0,'Myth. Involuntary swearing (coprolalia) affects only a minority of people with Tourette syndrome.'],
+ ['Many neurodivergent people have more than one profile.',1,'Fact. Co-occurrence is common, for example ADHD with dyslexia, or autism with ADHD.']];
+let mfAns={};
+$('mfList').innerHTML=MF.map((m,i)=>`<div class="mf" data-i="${i}"><p style="font-size:18px"><b>${i+1}.</b> ${m[0]}</p><div class="yn"><button type="button" data-v="0">Myth</button><button type="button" data-v="1">Fact</button></div><p class="exp"></p></div>`).join('');
+$('mfList').querySelectorAll('.mf').forEach(row=>row.querySelectorAll('button').forEach(b=>b.onclick=()=>{const i=+row.dataset.i;if(i in mfAns)return;const ok=+b.dataset.v===MF[i][1];mfAns[i]=ok;b.style.background=ok?'var(--good)':'var(--bad)';b.style.color='#fff';b.style.borderColor='transparent';row.classList.add('ans');row.querySelector('.exp').innerHTML=(ok?'✅ ':'❌ ')+MF[i][2];
+ const n=Object.keys(mfAns).length,sc=Object.values(mfAns).filter(Boolean).length;$('mfScore').innerHTML=`Score: <b>${sc}</b> / 10`+(n===10?(sc>=8?' 🌟 Myth-buster!':sc>=5?' 👍 Good. Revisit Unit 1.1 for the ones you missed.':' 📚 Revisit Unit 1.1 and try again.'):'');if(n===10)mark('s3')}));
+
+/* ---------- 4 story ---------- */
+const STORY={
+ start:{k:'Z',t:'8:55 am. Zoya, a first-year autistic student who also has ADHD, logs into your online class. The platform shows a 40-page PDF and the words “Live quiz at 9:30. Cameras on.”',o:[['Send a short outline: today’s 3 steps, the reading split into parts, and an audio version',1,'plan'],['Keep it as it is: university is meant to be challenging',0,'plan']]},
+ plan:{k:'Z',t:'9:30 am. The live quiz begins. It is timed: 60 seconds per question. Zoya knows the material, but the countdown makes her mind go blank.',o:[['Offer an untimed version open all week, with the same questions',1,'group'],['Keep the timer: speed shows real understanding',0,'group']]},
+ group:{k:'A',t:'10:15 am. Group work in breakout rooms. Arjun talks fast and Zoya cannot find a gap to speak. Her camera is off and the group thinks she is not trying.',o:[['Set roles and a shared document so everyone can contribute in writing too',1,'end'],['Tell Zoya she must turn her camera on and speak up',0,'end']]},
+ end:{k:'N',t:'',o:[]}};
+let stNode='start',stScore=0,stSteps=0;
+function renderStory(){const n=STORY[stNode];$('stPic').innerHTML=toon(n.k);
+ if(stNode==='end'){const ok=stScore;$('stStep').textContent='The end of the day';
+  $('stTxt').innerHTML=ok===3?'<b>5 pm.</b> Zoya finished every task, posted her best idea in writing, and the group used it. She writes in her journal: “Today I felt like I belonged.” <br><br>🌟 <b>3 of 3 inclusive choices.</b> None of these changes lowered standards; they removed barriers. Every student benefited.':`<b>5 pm.</b> Zoya is exhausted. She masked all day, missed the quiz questions she knew, and the group did not hear her ideas. She wonders if university is for her.<br><br>You made <b>${ok} of 3</b> inclusive choices. Small design changes could have changed her whole day. Play again and see.`;
+  $('stOpts').innerHTML='';$('stRe').hidden=false;mark('s4');return}
+ $('stStep').textContent='Decision '+(stSteps+1)+' of 3';$('stTxt').textContent=n.t;$('stRe').hidden=true;
+ $('stOpts').innerHTML=n.o.map((o,i)=>`<button type="button" data-i="${i}">${o[0]}</button>`).join('');
+ $('stOpts').querySelectorAll('button').forEach(b=>b.onclick=()=>{const o=n.o[+b.dataset.i];stScore+=o[1];stSteps++;stNode=o[2];renderStory()})}
+$('stSay').onclick=()=>say($('stTxt').textContent,STORY[stNode].k);
+$('stRe').onclick=()=>{stNode='start';stScore=0;stSteps=0;renderStory()};
+renderStory();
+
+/* ---------- 5 fix the barrier ---------- */
+const FIX=[
+ ['⏱ A 20-minute timed online quiz',['Give extra time only to students with a disability certificate','Remove time limits or make them generous for everyone','Cancel all quizzes'],1,'Generous or no time limits help anxious, dyslexic and ADHD learners, slow typists and those with weak internet, without anyone having to disclose.'],
+ ['📄 A 40-page reading as a scanned PDF',['Provide accessible text with headings, a summary and an audio option','Ask students to read it twice','Print it for the class'],0,'Accessible text works with screen readers and text-to-speech, and a summary helps everyone find the key points.'],
+ ['🎥 Discussion only in live video calls',['Require cameras on to prove attendance','Offer a written or audio forum as an equal alternative','Grade students on how often they speak'],1,'Multiple ways to participate (UDL) include processing differences, anxiety, tics and poor connections.'],
+ ['📝 “Write an essay on inclusion.” (no further guidance)',['Add a clear brief, a checklist, the rubric and an example','Tell students to ask if they are confused','Shorten the deadline to keep them focused'],0,'Explicit expectations remove guesswork for autistic learners and support executive function for everyone.'],
+ ['📹 AI proctoring that flags looking away',['Trust the AI flags automatically','Redesign as an open-book task that needs no surveillance','Ask students to look at the camera at all times'],1,'Movement, stimming and looking away to think are normal for many people. Better assessment design removes the need for surveillance.'],
+ ['🖼 Slides full of text with animated transitions',['Add more animation to keep attention','Use fewer words, clear visuals, good contrast and no flashing','Read the slides aloud word for word'],1,'Clean slides reduce cognitive and sensory load. Avoid flashing content, which can trigger discomfort or seizures.']];
+let fixOk=0;
+$('fixCards').innerHTML=FIX.map((f,i)=>`<div class="pcard" data-i="${i}"><b style="font-size:19px">${f[0]}</b><div class="opts" style="flex-direction:column">${f[1].map((o,j)=>`<button type="button" data-j="${j}">${o}</button>`).join('')}</div><p class="small" data-msg></p></div>`).join('');
+$('fixCards').querySelectorAll('.pcard').forEach(card=>card.querySelectorAll('button').forEach(b=>b.onclick=()=>{if(card.dataset.done)return;const f=FIX[+card.dataset.i];const j=+b.dataset.j;
+ if(j===f[2]){card.dataset.done=1;b.classList.add('right');card.classList.add('ok');card.querySelector('[data-msg]').innerHTML='<b style="color:var(--good)">✓ Barrier fixed!</b> '+f[3];fixOk++;$('fixScore').innerHTML=`Barriers fixed: <b>${fixOk}</b> of 6`+(fixOk===6?' 🛠 Master fixer!':'');if(fixOk===6)mark('s5')}
+ else{b.classList.add('wrong');card.querySelector('[data-msg]').innerHTML='<span style="color:var(--bad)">Try again: which option helps <b>most</b> learners without needing a diagnosis?</span>'}}));
+
+/* ---------- 6 riddles ---------- */
+const RID=[['I say the problem is not in the person but in the stairs without a ramp, the timed test, the noisy room.','The social model of disability'],['I explain that misunderstanding between autistic and non-autistic people runs both ways.','The double empathy problem'],['I am the tiring effort of hiding your differences to fit in.','Masking (camouflaging)'],['I am a repetitive movement or sound that helps someone regulate, like rocking or tapping.','Stimming'],['I am the brain’s “manager” for planning, starting tasks and keeping track of time.','Executive function'],['I was made for wheelchairs, yet parents with prams and travellers with suitcases use me every day.','The curb-cut effect'],['I say “autistic person” because many people see autism as part of who they are.','Identity-first language'],['I see brain differences as natural human variation, like biodiversity, not as defects.','The neurodiversity paradigm']];
+let ridOpen=0;
+$('ridList').innerHTML=RID.map((r,i)=>`<div class="rid"><p class="q"><b>Riddle ${i+1}.</b> ${r[0]}</p><button type="button" class="btn alt">Reveal</button><p class="a">💡 ${r[1]}</p></div>`).join('');
+$('ridList').querySelectorAll('.rid').forEach(d=>d.querySelector('button').onclick=e=>{if(!d.classList.contains('open')){d.classList.add('open');e.target.textContent='Revealed ✓';ridOpen++;if(ridOpen===8)mark('s6')}});
+
+/* ---------- 7 spiky profile ---------- */
+const AX=['Reading long texts','Listening and remembering','Visual thinking','Focus in noisy places','Speaking in groups','Hands-on making','Planning and organising','Creative ideas'];
+let vals=store.get('lab-spiky')||AX.map(()=>5),touched=0;
+$('sliders').innerHTML=AX.map((a,i)=>`<label class="sl"><span>${a}</span><input type="range" min="1" max="10" value="${vals[i]}" data-i="${i}"><b id="v${i}">${vals[i]}</b></label>`).join('');
+$('sliders').oninput=e=>{const i=+e.target.dataset.i;vals[i]=+e.target.value;$('v'+i).textContent=vals[i];store.set('lab-spiky',vals);touched++;drawRadar();if(touched>=6)mark('s7')};
+function drawRadar(){const cx=200,cy=200,R=140,n=AX.length;const pt=(i,v)=>{const a=-Math.PI/2+i*2*Math.PI/n;return [cx+Math.cos(a)*R*v/10,cy+Math.sin(a)*R*v/10]};
+ let s='';[2.5,5,7.5,10].forEach(l=>s+=`<polygon points="${AX.map((_,i)=>pt(i,l).join(',')).join(' ')}" fill="none" stroke="#C9CCD8" stroke-width="1"/>`);
+ AX.forEach((a,i)=>{const [x,y]=pt(i,10);const [lx,ly]=pt(i,12.4);s+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#C9CCD8"/><text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#4F5672">${a.split(' ').slice(0,2).join(' ')}</text>`});
+ s+=`<polygon points="${AX.map((_,i)=>pt(i,5).join(',')).join(' ')}" fill="none" stroke="#F5A623" stroke-width="3" stroke-dasharray="7 6"/>`;
+ s+=`<polygon points="${vals.map((v,i)=>pt(i,v).join(',')).join(' ')}" fill="rgba(108,59,245,.35)" stroke="#6C3BF5" stroke-width="3"/>`;
+ vals.forEach((v,i)=>{const [x,y]=pt(i,v);s+=`<circle cx="${x}" cy="${y}" r="5" fill="#6C3BF5"/>`});
+ $('radar').innerHTML=s;
+ const mx=Math.max(...vals),mn=Math.min(...vals),hi=AX[vals.indexOf(mx)],lo=AX[vals.indexOf(mn)];
+ $('spikeMsg').innerHTML=mx-mn>=3?`🌟 Your profile is <b>jagged</b>, like everyone’s! Strongest: <b>${hi}</b>. Hardest: <b>${lo}</b>. If a course only rewarded “${lo.toLowerCase()}”, how would it judge you? Your students’ profiles are jagged too (Rose, 2016).`:'Move the sliders honestly. Most people find their shape is jagged, not a perfect circle like the dashed “average” line.'}
+drawRadar();
+
+/* ---------- 8 rubric ---------- */
+const RUB=[['Understanding of neurodiversity',['Uses labels or deficit language','Names some profiles and barriers','Explains profiles with strengths and barriers','Connects profiles, barriers and the social model clearly']],
+ ['Empathy and perspective',['Describes the activities only','Notes how some learners might feel','Reflects on feelings and their own assumptions','Shows a real change in thinking, with an example']],
+ ['Inclusive design idea',['No change proposed','A vague idea','A clear change for one barrier','A specific UDL-based change that helps many learners']],
+ ['Communication',['Hard to follow','Partly clear','Clear and organised','Clear, concise and engaging in any format']]];
+let rsel=store.get('lab-rub')||[-1,-1,-1,-1];
+$('rub').innerHTML='<tr><th>Criterion</th><th>1 · Beginning</th><th>2 · Developing</th><th>3 · Proficient</th><th>4 · Exemplary</th></tr>'+RUB.map((r,i)=>`<tr><td style="font-weight:700;font-size:16px">${r[0]}</td>${r[1].map((c,j)=>`<td class="lv" tabindex="0" role="button" data-i="${i}" data-j="${j}">${c}</td>`).join('')}</tr>`).join('');
+function rub(){$('rub').querySelectorAll('.lv').forEach(td=>td.classList.toggle('on',rsel[+td.dataset.i]===+td.dataset.j));const sc=rsel.reduce((a,b)=>a+(b>=0?b+1:0),0),all=rsel.every(x=>x>=0);
+ $('rubRes').innerHTML=`Your score: <b>${sc}</b> / 16`+(all?(sc>=13?' 🌟 Excellent: ready for Module 2!':sc>=9?' 👍 Good. Strengthen your weakest criterion.':' 📚 Revisit the stations and Units 1.1–1.5, then reflect again.'):'');if(all)mark('s8')}
+$('rub').onclick=e=>{const td=e.target.closest('.lv');if(!td)return;rsel[+td.dataset.i]=+td.dataset.j;store.set('lab-rub',rsel);rub()};
+$('rub').onkeydown=e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('lv')){e.preventDefault();e.target.click()}};
+rub();
+$('bName').oninput=refresh;$('bPrint').onclick=()=>window.print();
+refresh();
+</script>
+</body>
+</html>
